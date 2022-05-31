@@ -2,7 +2,7 @@
 
     <carousel :items-to-show="1" :wrap-around="true" class="p_top">
         <slide v-for="slide in slides" :key="slide.id">
-            <div class="slider_bck" :style="{ background: `url(http://placebeard.it/1080/720)` }">
+            <div class="slider_bck" :style="{ background: `url(http://placebeard.it/1080/720?${slide.id})` }">
                 <div class="slide_content">
                     <div class="item">
                         <div>Title of the article</div>
@@ -28,19 +28,11 @@
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination } from 'vue3-carousel';
 export default {
+    props: ['slides'],
     components: {
         Carousel,
         Slide,
         Pagination
-    },
-    data() {
-        return {
-            slides: [
-                { id: 1 },
-                { id: 2 },
-                { id: 3 }
-            ]
-        }
     }
 };
 </script>
