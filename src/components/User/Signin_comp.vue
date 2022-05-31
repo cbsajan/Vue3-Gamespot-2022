@@ -77,6 +77,7 @@ export default {
             } else {
                 //sign up
                 console.log(values, 'SIGN UP')
+                this.$store.dispatch('auth/signup', values)
             }
             //resetForm();
         }
