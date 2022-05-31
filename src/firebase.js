@@ -16,9 +16,10 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
-
+const users = 'users'
 export {
     firebaseApp,
     auth,
-    db
+    db,
+    users
 }
