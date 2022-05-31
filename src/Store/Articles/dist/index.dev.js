@@ -1,11 +1,14 @@
-const ArticleModule = {
-    state() {
-        return {
+"use strict";
 
-        }
-    }
-}
-// const obj = {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+var ArticleModule = {
+  state: function state() {
+    return {};
+  }
+}; // const obj = {
 //     id:'1238635252',
 //     owner:{
 //         firstname:'Francis',
@@ -20,4 +23,6 @@ const ArticleModule = {
 //     excerpt:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
 //     editor:'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>'
 // }
-export default ArticleModule 
+
+var _default = ArticleModule;
+exports["default"] = _default;
