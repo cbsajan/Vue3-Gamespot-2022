@@ -3,7 +3,7 @@ const NotificationsModule = {
     state() {
 
         return {
-            loader: false,
+            loader: true,
             toasterMsg: [false, '', ''] // boolean  - Message - Type [error,success] 
         }
 

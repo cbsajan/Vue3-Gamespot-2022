@@ -5,7 +5,8 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import Home from './components/Home/Index_comp.vue';
 import Article_comp from './components/Articles/Article_comp.vue';
 import Signin from './components/User/Signin_comp.vue';
-
+import store from './Store/index';
+ 
 
 const routes = createRouter({
     history: createWebHistory(),
@@ -18,20 +19,29 @@ const routes = createRouter({
 const auth = getAuth();
 
 
+const validateCheck = (to, from, next) => {
+    next();
+
+    store.commit('notify/setLoading', false);
+}
+
+
 routes.beforeEach((to, from, next) => {
     if (from === START_LOCATION) {
-        onAuthStateChanged(auth, user => {
+        const unsubscribe = onAuthStateChanged(auth, user => {
             if (user) {
-                console.log(user, 'autosign in')
+                store.dispatch('auth/autosign', user).then(() => {
+                    validateCheck(to, from, next)
+                })
             } else {
-                console.log(user, 'not autosign in')
+                validateCheck(to, from, next)
             }
         })
-        next();
+        unsubscribe();
     } else {
-        console.log('other')
-        next()
+        validateCheck(to, from, next)
     }
 })
+
 
 export default routes;
