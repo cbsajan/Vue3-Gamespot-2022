@@ -3,6 +3,7 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword
 } from 'firebase/auth'
+import { msgError, msgSuccess } from '../../components/Tools/vuex.js'
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import router from '../../routes'
 import { db, auth, users } from '../../firebase';
@@ -58,9 +59,13 @@ const authModule = {
                 const UserData = await dispatch('getUserProfile', userCredential.user.uid)
                 console.log(userCredential)
                 commit('setUser', UserData)
+                const email = userCredential.user.email
+                var name = (email.substring(0, email.lastIndexOf("@"))).replace(/\b\w/g, l => l.toUpperCase());
+                msgSuccess(commit, `Welcome ${name} !!`)
                 router.push('/user/dashboard')
             } catch (error) {
                 console.error(error);
+                msgError(commit)
             }
         },
         async signup({ commit }, payload) {
@@ -81,11 +86,13 @@ const authModule = {
                 console.log(newUser)
                 await setDoc(doc(db, users, newUser.uid), newUser)
                 commit('setUser', newUser)
-
+                const email = userCredential.user.email
+                var name = (email.substring(0, email.lastIndexOf("@"))).replace(/\b\w/g, l => l.toUpperCase());
+                msgSuccess(commit, `Welcome ${name} !!`)
                 router.push('/user/dashboard')
 
             } catch (error) {
-
+                msgError(commit)
             }
         }
     }
