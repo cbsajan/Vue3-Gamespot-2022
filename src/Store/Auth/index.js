@@ -51,6 +51,7 @@ const authModule = {
         },
         async signin({ commit, dispatch }, payload) {
             try {
+                commit('notify/setLoading', true, { root: true })
                 const userCredential = await signInWithEmailAndPassword(
                     auth,
                     payload.email,
@@ -66,10 +67,13 @@ const authModule = {
             } catch (error) {
                 console.error(error);
                 msgError(commit)
+            } finally {
+                commit('notify/setLoading', false, { root: true })
             }
         },
         async signup({ commit }, payload) {
             try {
+                commit('notify/setLoading', true, { root: true })
                 const userCredential = await createUserWithEmailAndPassword(
                     auth,
                     payload.email,
@@ -93,6 +97,8 @@ const authModule = {
 
             } catch (error) {
                 msgError(commit)
+            } finally {
+                commit('notify/setLoading', false, { root: true })
             }
         }
     }
