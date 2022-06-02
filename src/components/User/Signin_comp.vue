@@ -73,6 +73,7 @@ export default {
             //try { } catch { }
             if (!this.type) {
                 // sign in
+                this.$store.dispatch('auth/signin', values)
                 console.log(values, 'SIGN IN')
             } else {
                 //sign up
