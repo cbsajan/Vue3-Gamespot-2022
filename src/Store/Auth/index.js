@@ -26,6 +26,16 @@ const authModule = {
             auth: false
         }
     },
+    getters: {
+        isAuth(state) {
+            if (state.auth) { return true };
+            return false
+        },
+        isAdmin(state) {
+            if (state.user.isAdmin) { return true };
+            return false
+        }
+    },
     mutations: {
         setUser(state, payload) {
             state.user = {
@@ -33,15 +43,29 @@ const authModule = {
                 ...payload
             }
             state.auth = true;
+        },
+        clearUser(state) {
+            state.user = DEFAULT_USER
+            state.auth = false
         }
     },
     actions: {
-        async autosign({commit,dispatch},payload){
+        async signOut({ commit }) {
             try {
-                const userData = await dispatch('getUserProfile',payload.uid);
+                await auth.signOut()
+                commit('clearUser')
+                router.push('/')
+                msgSuccess(commit, 'Logged out Successfully')
+            } catch (error) {
+                msgError(commit)
+            }
+        },
+        async autosign({ commit, dispatch }, payload) {
+            try {
+                const userData = await dispatch('getUserProfile', payload.uid);
                 commit('setUser', userData);
                 return true;
-            } catch(error){
+            } catch (error) {
                 msgError(commit);
                 console.log(error)
             }
