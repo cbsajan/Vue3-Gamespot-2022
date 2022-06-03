@@ -10,6 +10,8 @@
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
     "@meforma/vue-toaster": "^1.3.0",
+    "@tiptap/starter-kit": "^2.0.0-beta.185",
+    "@tiptap/vue-3": "^2.0.0-beta.91",
     "ant-design-vue": "^2.2.8",
     "core-js": "^3.8.3",
     "firebase": "^9.8.2",

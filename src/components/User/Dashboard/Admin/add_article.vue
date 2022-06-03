@@ -31,6 +31,11 @@
 
         <br />
 
+        <wysiwyg_comp />
+
+        <br />
+
+
         <div class="form-group">
             <Field name="rating" v-slot="{ field, errors, errorMessage }">
                 <form-element :field="field" :errors="errors" :errorMessage="errorMessage" element="rating">
@@ -72,6 +77,7 @@
 <script>
 /* eslint-disable */
 import FormElement from '../../../Utils/form_elements.vue';
+import wysiwyg_comp from '../../../Utils/wysiwyg_comp.vue';
 import { addArticleSchema } from '../../../Tools/schemas.js';
 import DashboardTitle from '../../../Utils/dashTitle.vue';
 import { Field, Form } from 'vee-validate';
@@ -80,7 +86,8 @@ export default {
         DashboardTitle,
         Field,
         Form,
-        FormElement
+        FormElement,
+        wysiwyg_comp
     },
     data() {
         return {
