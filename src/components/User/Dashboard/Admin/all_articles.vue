@@ -4,7 +4,7 @@
     <div v-if="adminArticles">
 
         <a-table :columns="columns" :data-source="adminArticles" :row-key="record => record.id" bordered
-            :pagination="{ pageSize: 3 }">
+            :pagination="{ pageSize: 4 }">
             <template #title>
                 <router-link :to="{ name: 'admin_add' }">
                     <button class="btn btn-secondary">Add article</button>
@@ -72,11 +72,9 @@ export default {
     },
     methods: {
         ...mapActions('articles', [
-            'getAdminArticles'
-        ]),
-        removeById(id) {
-            console.log(id)
-        }
+            'getAdminArticles',
+            'removeById'
+        ])
     }
 }
 const columns = [
@@ -97,7 +95,7 @@ const columns = [
         slots: { customRender: 'time' }
     },
     {
-        title: '',
+        title: 'Action',
         slots: { customRender: 'delete' }
     }
 ]

@@ -4,7 +4,7 @@
 import { msgSuccess, msgError } from '../../components/Tools/vuex';
 import {
     doc, setDoc, getDocs, collection,
-    serverTimestamp, limit,
+    serverTimestamp, limit, deleteDoc,
     orderBy, startAfter, query
 } from 'firebase/firestore';
 import { db, articles } from '../../firebase';
@@ -74,6 +74,21 @@ const articlesModule = {
                 commit('setAdminLastVisible', lastVisible);
             } catch (error) {
                 msgError(commit, 'Opp,try again later')
+            }
+        },
+        async removeById({ commit, state }, payload) {
+            try {
+                await deleteDoc(doc(db, articles, payload));
+
+                const newList = state.adminArticles.filter(x => {
+                    return x.id != payload
+                });
+
+                commit("setAdminArticles", newList);
+                msgSuccess(commit, 'Articles deleted !!');
+
+            } catch (error) {
+                msgError(commit, error)
             }
         }
     }
