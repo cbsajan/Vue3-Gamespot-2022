@@ -52,7 +52,7 @@ const articlesModule = {
                     },
                     ...payload
                 });
-                router.push({ name: 'admin_articles' })
+                router.push({ name: 'admin_articles', params: { reload: true } })
                 msgSuccess(commit, 'Congratulations')
             } catch (error) {
                 msgError(commit);
@@ -61,7 +61,7 @@ const articlesModule = {
         },
         async getAdminArticles({ commit }, payload) {
             try {
-                const q = query(articlesCol, orderBy('timestamp', 'desc'), limit(payload.limit));
+                const q = query(articlesCol, orderBy('timestamp', 'desc'));
                 const querySnapshot = await getDocs(q);
 
                 const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
@@ -73,7 +73,7 @@ const articlesModule = {
                 commit('setAdminArticles', articles);
                 commit('setAdminLastVisible', lastVisible);
             } catch (error) {
-                console.log(error)
+                msgError(commit, 'Opp,try again later')
             }
         }
     }

@@ -3,8 +3,13 @@
 
     <div v-if="adminArticles">
 
-        <a-table :columns="columns" :pagination="false" :data-source="adminArticles" :row-key="record => record.id"
-            bordered>
+        <a-table :columns="columns" :data-source="adminArticles" :row-key="record => record.id" bordered
+            :pagination="{ pageSize: 3 }">
+            <template #title>
+                <router-link :to="{ name: 'admin_add' }">
+                    <button class="btn btn-secondary">Add article</button>
+                </router-link>
+            </template>
             <template #name="{ text }">
                 <a>{{ text }}</a>
             </template>
@@ -60,7 +65,10 @@ export default {
         }
     },
     mounted() {
-        this.getAdminArticles({ limit: 3 })
+        const reload = this.$route.params.reload;
+        if (!this.adminArticles || reload) {
+            this.getAdminArticles({ limit: 1 })
+        }
     },
     methods: {
         ...mapActions('articles', [
