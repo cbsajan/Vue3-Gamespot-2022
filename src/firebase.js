@@ -17,9 +17,11 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 const users = 'users'
+const articles = 'articles'
 export {
     firebaseApp,
     auth,
     db,
-    users
+    users,
+    articles
 }

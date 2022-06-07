@@ -34,6 +34,9 @@ const authModule = {
         isAdmin(state) {
             if (state.user.isAdmin) { return true };
             return false
+        },
+        getUserData(state) {
+            return state.user;
         }
     },
     mutations: {

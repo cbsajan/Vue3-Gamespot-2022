@@ -73,7 +73,7 @@
 
         <br />
 
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" :disabled="loading">
             Add article
         </button>
     </Form>
@@ -99,6 +99,7 @@ export default {
         return {
             veditor: '',
             rating: 0,
+            loading: false,
             formSchema: addArticleSchema
         }
     },
@@ -111,13 +112,14 @@ export default {
         onSubmit(values) {
             this.getRatingandStore()
             values.rating = this.rating
-            console.log(values);
+            this.loading = true
+
+            this.$store.dispatch('articles/addArticle', values).finally(() => {
+                this.loading = false;
+            })
 
         },
-        getRating(rating) {
-            this.rating = rating;
-            console.log(rating)
-        },
+
         updateEditor(value) {
             this.veditor = value
             console.log(value)
