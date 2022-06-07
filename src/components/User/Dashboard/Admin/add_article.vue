@@ -31,12 +31,18 @@
 
         <br />
 
-        <wysiwyg_comp />
-
+        <wysiwyg_comp @update="updateEditor" />
+        <Field name="editor" v-model="veditor" v-slot="{ field, errors, errorMessage }">
+            <input type="hidden" id="veditor" v-bind="field" />
+            <div class="alert alert-danger" v-if="errors.length !== 0">
+                {{ errorMessage }}
+            </div>
+        </Field>
         <br />
 
 
         <div class="form-group">
+            <h3>Rating</h3>
             <Field name="rating" v-slot="{ field, errors, errorMessage }">
                 <form-element :field="field" :errors="errors" :errorMessage="errorMessage" element="rating">
                     <!-- <option value="Select a rating" selected>Select a rating</option>
@@ -91,7 +97,7 @@ export default {
     },
     data() {
         return {
-
+            veditor: '',
             rating: 0,
             formSchema: addArticleSchema
         }
@@ -111,6 +117,10 @@ export default {
         getRating(rating) {
             this.rating = rating;
             console.log(rating)
+        },
+        updateEditor(value) {
+            this.veditor = value
+            console.log(value)
         }
     }
 }

@@ -47,7 +47,8 @@ export default {
                 StarterKit,
             ],
             onUpdate: () => {
-                console.log(this.editor.getHTML())
+                this.$emit('update', this.editor.getHTML())
+
             }
         })
     },
