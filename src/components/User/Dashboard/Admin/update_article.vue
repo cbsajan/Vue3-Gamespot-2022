@@ -113,7 +113,14 @@ export default {
         onSubmit(values) {
             this.getRatingandStore()
             values.rating = this.rating
-            console.log(values)
+            this.loading = true
+
+            this.$store.dispatch('articles/updateArticle', {
+                values,
+                id: this.$route.params.id
+            }).finally(() => {
+                this.loading = false;
+            });
             //  this.loading = true;
             //  this.$store.dispatch('articles/addArticle',values).finally(()=>{
             //     this.loading = false;
@@ -121,19 +128,25 @@ export default {
         },
         updateEditor(value) {
             this.veditor = value;
+        },
+        getArticle(id) {
+            this.$store.dispatch('articles/getArticle', id)
+                .then((article) => {
+                    if (article) {
+                        this.article = article;
+                    } else {
+                        this.$router.push({ name: '404' })
+                    }
+                })
         }
     },
+    beforeRouteUpdate(to) {
+        this.getArticle(to.params.id);
+    },
     mounted() {
-        this.$store.dispatch('articles/getArticle', this.$route.params.id)
-            .then((article) => {
-                if (article) {
-                    this.article = article;
-                    console.log(parseInt(article.rating))
-                    this.rating = parseInt(article.rating)
-                } else {
-                    this.$router.push({ name: '404' })
-                }
-            })
+
+        this.getArticle(this.$route.params.id);
+
     }
 }
 </script>

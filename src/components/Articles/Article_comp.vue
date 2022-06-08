@@ -1,14 +1,15 @@
 <template>
     <div class="container p_top article_page" v-if="article">
 
-        <div class="game_tag">
-            {{ article.game }}
-        </div>
+
         <br>
         <br>
         <div class="article_featured" :style="{ backgroundImage: `url(${article.img})` }"></div>
 
         <div class="article_content">
+            <h2 class="">
+                {{ article.game }}
+            </h2>
             <star-rating v-model:rating="article.rating" read-only="true" star-size="20" :show-rating="false"
                 increment="0.5" />
             <div class="owner">
