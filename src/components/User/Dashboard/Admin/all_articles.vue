@@ -7,7 +7,14 @@
             :pagination="{ pageSize: 4 }">
             <template #title>
                 <router-link :to="{ name: 'admin_add' }">
-                    <button class="btn btn-secondary">Add article</button>
+                    <a-button type="primary" style=" font-size:15px">
+                        <template #icon>
+                            <plus-outlined style="color:blue;font-size:20px" />
+
+                        </template>
+                        Article
+                    </a-button>
+
                 </router-link>
             </template>
             <template #name="{ text }">
@@ -34,8 +41,15 @@
 
 
             <template #delete="{ record }">
+
+
                 <a-popconfirm title="Are you sure ?" ok-text="Yes" cancel-text="No" @confirm="removeById(record.id)">
-                    <button class="btn btn-danger btn-sm">Delete article</button>
+                    <a-button style=" font-size:15px">
+                        <template #icon>
+                            <delete-outlined style="color:red;font-size:25px" @click="alert('Enter')" />
+                        </template>
+
+                    </a-button>
                 </a-popconfirm>
             </template>
 
@@ -43,16 +57,23 @@
         </a-table>
 
     </div>
+    <div v-else>
+        <Loader />
+    </div>
 
 </template>
 
 
 <script>
 import DashboardTitle from '../../../Utils/dashTitle.vue';
+import Loader from '../../../Utils/Loader_comp.vue';
 import { mapActions } from 'vuex'
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons-vue';
 export default {
     components: {
-        DashboardTitle
+        DashboardTitle,
+        DeleteOutlined,
+        PlusOutlined, Loader
     },
     data() {
         return {

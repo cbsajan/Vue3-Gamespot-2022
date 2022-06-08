@@ -4,7 +4,7 @@ import {
     signInWithEmailAndPassword
 } from 'firebase/auth'
 import { msgError, msgSuccess } from '../../components/Tools/vuex.js'
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import router from '../../routes'
 import { db, auth, users } from '../../firebase';
 
@@ -37,6 +37,9 @@ const authModule = {
         },
         getUserData(state) {
             return state.user;
+        },
+        getUserId(state) {
+            return state.user.uid
         }
     },
     mutations: {
@@ -53,6 +56,27 @@ const authModule = {
         }
     },
     actions: {
+        async updateProfile({ commit, getters }, payload) {
+            try {
+                const UserRef = doc(db, users, getters.getUserId)
+                const userData = getters.getUserData;
+                if (
+                    payload.firstname === userData.firstname &&
+                    payload.lastname === userData.lastname
+                ) {
+                    msgError(commit, 'They are the same !!!')
+                    return false
+                }
+                await updateDoc(userRef, {
+                    ...payload
+                });
+
+                commit('setUser', payload);
+                msgSuccess(commit, 'Updated');
+            } catch (error) {
+                msgError(commit, error)
+            }
+        },
         async signOut({ commit }) {
             try {
                 await auth.signOut()

@@ -17,24 +17,29 @@ const routes = createRouter({
     history: createWebHistory(),
     routes: [
         { path: '/', component: Home, name: 'home' },
-       
+
         { path: '/article/:id', component: Article_comp, name: 'article' },
         { path: '/signin', component: Signin, name: 'signin', meta: { signin: true } },
         {
             path: '/user/dashboard', component: Dashboard, meta: { auth: true }, children: [
                 { path: '', component: UserMain, name: 'dashboard' },
                 { path: 'profile', component: UserProfile, name: 'user_profile' },
-                { path: 'articles', component: AdminArticles, name: 'admin_articles' },
-                { path: 'articles/add', component: AdminAddArticles, name: 'admin_add' },
+                { path: 'articles', component: AdminArticles, name: 'admin_articles', meta: { isAdmin: true } },
+                { path: 'articles/add', component: AdminAddArticles, name: 'admin_add', meta: { isAdmin: true } },
             ]
         },
-        { path: '/:notFound(.*)*', component: NotFound,name:'404'}
+        { path: '/:notFound(.*)*', component: NotFound, name: '404' }
     ]
 })
 const auth = getAuth();
 
 
 const validateCheck = (to, from, next) => {
+    if (to.meta.isAdmin && !store.getters['auth/isAdmin']) {
+        next('/user/dashboard');
+    } else {
+        next();
+    }
     if (to.meta.auth && !store.getters['auth/isAuth']) {
         next('/signin');
     } else if (to.meta.signin && store.getters['auth/isAuth']) {
