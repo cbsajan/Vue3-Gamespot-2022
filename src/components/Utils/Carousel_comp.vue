@@ -1,27 +1,28 @@
 <template>
 
-    <carousel :items-to-show="1" :wrap-around="true" class="p_top">
-        <slide v-for="slide in slides" :key="slide.id">
-            <div class="slider_bck" :style="{ background: `url(http://placebeard.it/1080/720?${slide.id})` }">
-                <div class="slide_content">
-                    <div class="item">
-                        <div>Title of the article</div>
-                        <div>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut aliquip ex ea commodo consequat.
+    <div v-if="slides">
+        <carousel :items-to-show="1" :wrap-around="true" class="p_top">
+            <slide v-for="slide in slides" :key="slide.id">
+                <div class="slider_bck" :style="{ background: `url(${slide.img})` }">
+                    <div class="slide_content">
+                        <div class="item">
+                            <div>{{ slide.title }}</div>
+                            <div>
+                                {{ slide.excerpt }}
+                            </div>
                         </div>
                     </div>
+
                 </div>
+            </slide>
 
-            </div>
-        </slide>
+            <template #addons>
+                <pagination />
+            </template>
 
-        <template #addons>
-            <pagination />
-        </template>
+        </carousel>
+    </div>
 
-    </carousel>
 </template>
 
 <script>

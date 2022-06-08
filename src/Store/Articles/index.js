@@ -18,11 +18,16 @@ const articlesModule = {
     namespaced: true,
     state() {
         return {
+            homeArticles: '',
             adminArticles: '',
             adminLastVisible: ''
         }
     },
     getters: {
+        getHomeArticles(state) {
+            return state.homeArticles;
+        },
+
         getAdminArticles(state) {
             return state.adminArticles;
         },
@@ -31,6 +36,9 @@ const articlesModule = {
         }
     },
     mutations: {
+        setHomeArticles(state, articles) {
+            state.homeArticles = articles;
+        },
         setAdminArticles(state, articles) {
             state.adminArticles = articles;
         },
@@ -39,6 +47,19 @@ const articlesModule = {
         }
     },
     actions: {
+        async getArticles({ commit }, payload) {
+            try {
+                const q = query(articlesCol, orderBy('timestamp', 'desc'));
+                const querySnapshot = await getDocs(q);
+                const articles = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                commit("setHomeArticles", articles);
+            } catch (error) {
+                msgError(commit, error)
+            }
+        },
         async addArticle({ commit, rootGetters }, payload) {
             try {
                 const user = rootGetters['auth/getUserData'];
