@@ -40,17 +40,26 @@
             </template>
 
 
-            <template #delete="{ record }">
+            <template #action="{ record }">
 
 
                 <a-popconfirm title="Are you sure ?" ok-text="Yes" cancel-text="No" @confirm="removeById(record.id)">
                     <a-button style=" font-size:15px">
                         <template #icon>
-                            <delete-outlined style="color:red;font-size:25px" @click="alert('Enter')" />
+                            <delete-outlined style="color:red;font-size:25px" />
                         </template>
 
                     </a-button>
                 </a-popconfirm>
+                &nbsp;
+                <router-link :to="{ name: 'admin_edit', params: { id: record.id } }">
+                    <a-button style=" font-size:15px">
+                        <template #icon>
+                            <Form-Outlined style="color:green;font-size:25px" />
+                        </template>
+
+                    </a-button>
+                </router-link>
             </template>
 
 
@@ -68,12 +77,14 @@
 import DashboardTitle from '../../../Utils/dashTitle.vue';
 import Loader from '../../../Utils/Loader_comp.vue';
 import { mapActions } from 'vuex'
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons-vue';
+import { DeleteOutlined, PlusOutlined, FormOutlined } from '@ant-design/icons-vue';
 export default {
     components: {
         DashboardTitle,
         DeleteOutlined,
-        PlusOutlined, Loader
+        PlusOutlined,
+        Loader,
+        FormOutlined
     },
     data() {
         return {
@@ -117,7 +128,7 @@ const columns = [
     },
     {
         title: 'Action',
-        slots: { customRender: 'delete' }
+        slots: { customRender: 'action' }
     }
 ]
 </script>

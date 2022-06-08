@@ -13,6 +13,7 @@ import UserMain from './components/User/Dashboard/Main_comp.vue';
 import UserProfile from './components/User/Dashboard/Pages/user_profile.vue';
 import AdminArticles from './components/User/Dashboard/Admin/all_articles.vue';
 import AdminAddArticles from './components/User/Dashboard/Admin/add_article.vue';
+import AdminEditArticle from './components/User/Dashboard/Admin/update_article.vue';
 const routes = createRouter({
     history: createWebHistory(),
     routes: [
@@ -26,6 +27,7 @@ const routes = createRouter({
                 { path: 'profile', component: UserProfile, name: 'user_profile' },
                 { path: 'articles', component: AdminArticles, name: 'admin_articles', meta: { isAdmin: true } },
                 { path: 'articles/add', component: AdminAddArticles, name: 'admin_add', meta: { isAdmin: true } },
+                { path: 'articles/edit/:id', component: AdminEditArticle, name: 'admin_edit', meta: { isAdmin: true } },
             ]
         },
         { path: '/:notFound(.*)*', component: NotFound, name: '404' }
