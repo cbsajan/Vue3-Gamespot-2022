@@ -3,11 +3,12 @@ import { createRouter, createWebHistory, START_LOCATION } from 'vue-router';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 // COMPONENTS
 import Home from './components/Home/Index_comp.vue';
+
 import Article_comp from './components/Articles/Article_comp.vue';
 import Signin from './components/User/Signin_comp.vue';
 import store from './Store/index';
 import Dashboard from "./components/User/Dashboard/Index_comp.vue";
-
+import NotFound from './components/404_Error_Page.vue'
 import UserMain from './components/User/Dashboard/Main_comp.vue';
 import UserProfile from './components/User/Dashboard/Pages/user_profile.vue';
 import AdminArticles from './components/User/Dashboard/Admin/all_articles.vue';
@@ -16,6 +17,7 @@ const routes = createRouter({
     history: createWebHistory(),
     routes: [
         { path: '/', component: Home, name: 'home' },
+       
         { path: '/article/:id', component: Article_comp, name: 'article' },
         { path: '/signin', component: Signin, name: 'signin', meta: { signin: true } },
         {
@@ -25,7 +27,8 @@ const routes = createRouter({
                 { path: 'articles', component: AdminArticles, name: 'admin_articles' },
                 { path: 'articles/add', component: AdminAddArticles, name: 'admin_add' },
             ]
-        }
+        },
+        { path: '/:notFound(.*)*', component: NotFound,name:'404'}
     ]
 })
 const auth = getAuth();

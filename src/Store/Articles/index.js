@@ -4,7 +4,7 @@
 import { msgSuccess, msgError } from '../../components/Tools/vuex';
 import {
     doc, setDoc, getDocs, collection,
-    serverTimestamp, limit, deleteDoc,
+    serverTimestamp, limit, deleteDoc, getDoc,
     orderBy, startAfter, query
 } from 'firebase/firestore';
 import { db, articles } from '../../firebase';
@@ -47,6 +47,19 @@ const articlesModule = {
         }
     },
     actions: {
+        async getArticle({ commit }, payload) {
+            try {
+                const docSnap = await getDoc(doc(db, articles, payload));
+
+                if (docSnap.exists()) {
+                    return docSnap.data();
+                } else {
+                    return null
+                }
+            } catch (error) {
+                msgError(commit)
+            }
+        },
         async getArticles({ commit }, payload) {
             try {
                 const q = query(articlesCol, orderBy('timestamp', 'desc'));
